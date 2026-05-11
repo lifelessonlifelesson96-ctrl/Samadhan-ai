@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samadhan AI — समाधान | India's #1 Problem Solver</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g1:#16a34a;--g2:#15803d;--g3:#dcfce7;--g4:#f0fdf4;
+  --gg:linear-gradient(135deg,#22c55e,#15803d);
+  --white:#fff;--gray1:#f8fafc;--gray2:#f1f5f9;--gray3:#e2e8f0;--gray4:#cbd5e1;
+  --text1:#0f172a;--text2:#334155;--text3:#64748b;--text4:#94a3b8;
+  --danger:#ef4444;--warning:#f59e0b;--info:#3b82f6;--purple:#8b5cf6;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --shadow-lg:0 10px 25px rgba(0,0,0,.1),0 4px 10px rgba(0,0,0,.05);
+  --font:'DM Sans',sans-serif;--display:'Syne',sans-serif;
+}
+body{font-family:var(--font);background:var(--white);color:var(--text1);height:100vh;display:flex;overflow:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--gray3);border-radius:2px}
+
+/* AUTH */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.auth-overlay.hidden{display:none}
+.auth-box{background:var(--white);border-radius:24px;padding:40px 36px;max-width:420px;width:90%;text-align:center;box-shadow:var(--shadow-lg)}
+.auth-logo{width:60px;height:60px;border-radius:16px;background:var(--gg);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 0 30px rgba(34,197,94,.3)}
+.auth-logo svg{width:30px;height:30px;fill:#fff}
+.auth-title{font-family:var(--display);font-size:24px;font-weight:800;margin-bottom:6px;color:var(--text1)}
+.auth-sub{font-size:13px;color:var(--text3);line-height:1.6;margin-bottom:22px}
+.auth-feats{text-align:left;margin-bottom:22px;display:flex;flex-direction:column;gap:8px}
+.auth-feat{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text2)}
+.feat-check{width:18px;height:18px;border-radius:50%;background:var(--g3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:var(--g1);font-weight:700}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border-radius:12px;border:1.5px solid var(--gray3);background:var(--white);font-size:14px;font-weight:600;color:var(--text1);cursor:pointer;font-family:var(--font);transition:all .15s;box-shadow:var(--shadow);margin-bottom:10px}
+.google-btn:hover{border-color:#4285f4;background:#f8f9ff;transform:translateY(-1px);box-shadow:var(--shadow-lg)}
+.google-btn img{width:20px;height:20px}
+.auth-or{font-size:12px;color:var(--text4);margin:10px 0;display:flex;align-items:center;gap:8px}
+.auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:var(--gray3)}
+.skip-btn{width:100%;padding:11px;border-radius:12px;border:1.5px solid var(--gray3);background:var(--gray1);font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;font-family:var(--font);transition:all .15s}
+.skip-btn:hover{background:var(--gray2)}
+
+/* PAYMENT MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:900;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+.modal-overlay.open{display:flex}
+.pay-box{background:var(--white);border-radius:24px;padding:32px;max-width:520px;width:100%;box-shadow:var(--shadow-lg);position:relative;max-height:90vh;overflow-y:auto}
+.pay-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:1.5px solid var(--gray3);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--text3);transition:all .15s}
+.pay-close:hover{background:var(--gray2)}
+.pay-title{font-family:var(--display);font-size:22px;font-weight:800;margin-bottom:4px}
+.pay-sub{font-size:13px;color:var(--text3);margin-bottom:20px}
+.country-row{margin-bottom:18px}
+.clabel{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block}
+.csel{width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text1);font-size:13px;font-family:var(--font);outline:none;cursor:pointer}
+.csel:focus{border-color:var(--g1)}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
+.plan-opt{border:2px solid var(--gray3);border-radius:14px;padding:14px;cursor:pointer;transition:all .15s;position:relative;text-align:center}
+.plan-opt:hover{border-color:var(--g1);transform:translateY(-2px)}
+.plan-opt.sel{border-color:var(--g1);background:var(--g4)}
+.plan-opt.popular::before{content:'Most Popular';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--g1);color:#fff;font-size:9px;font-weight:700;padding:3px 10px;border-radius:10px;white-space:nowrap}
+.plan-opt.best::before{content:'Best Value';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;font-size:9px;font-weight:700;padding:3px 10px;border-radius:10px;white-space:nowrap}
+.plan-icon{font-size:22px;margin-bottom:6px}
+.plan-name3{font-family:var(--display);font-size:14px;font-weight:700;margin-bottom:4px}
+.plan-price3{font-size:22px;font-weight:800;color:var(--g1);line-height:1}
+.plan-period2{font-size:10px;color:var(--text3)}
+.plan-feats2{list-style:none;text-align:left;margin-top:8px;display:flex;flex-direction:column;gap:3px}
+.plan-feat2{font-size:11px;color:var(--text2);display:flex;align-items:flex-start;gap:5px;line-height:1.4}
+.plan-feat2::before{content:'✓';color:var(--g1);font-weight:700;font-size:10px;flex-shrink:0;margin-top:1px}
+.pay-cta{width:100%;padding:14px;border-radius:12px;border:none;background:var(--gg);color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:var(--display);box-shadow:0 0 20px rgba(34,197,94,.3);transition:all .15s}
+.pay-cta:hover{transform:translateY(-1px);box-shadow:0 0 30px rgba(34,197,94,.4)}
+.pay-note{font-size:11px;color:var(--text4);text-align:center;margin-top:10px}
+.pay-methods{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+.pay-method{font-size:11px;padding:4px 10px;border-radius:8px;background:var(--gray1);color:var(--text3);border:1px solid var(--gray3)}
+
+/* SIDEBAR */
+.sidebar{width:240px;flex-shrink:0;background:#0f2318;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.sidebar-logo{display:flex;align-items:center;gap:11px;padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo-wrap{width:34px;height:34px;border-radius:9px;background:var(--gg);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 16px rgba(34,197,94,.35)}
+.logo-wrap svg{width:18px;height:18px;fill:#fff}
+.logo-txt{font-family:var(--display);font-size:15px;font-weight:800;color:#fff}
+.logo-sub2{font-size:10px;color:rgba(255,255,255,.45)}
+.sidebar-nav{flex:1;padding:12px 8px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.nav-lbl{font-size:9px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;padding:10px 10px 4px}
+.nav-btn{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;cursor:pointer;color:rgba(255,255,255,.6);font-size:13px;font-weight:500;transition:all .15s;background:transparent;border:none;font-family:var(--font);text-align:left;width:100%}
+.nav-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-btn.on{background:rgba(34,197,94,.18);color:#fff;font-weight:600}
+.nav-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.nav-badge2{font-size:9px;padding:2px 7px;border-radius:8px;margin-left:auto;font-weight:600}
+.lang-pills{display:flex;gap:4px;flex-wrap:wrap;padding:0 3px}
+.lpill{font-size:11px;padding:4px 9px;border-radius:7px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;font-family:var(--font);transition:all .15s}
+.lpill:hover{background:rgba(255,255,255,.08);color:#fff}
+.lpill.on{background:rgba(34,197,94,.25);color:#fff;border-color:rgba(34,197,94,.4)}
+.sidebar-foot{padding:12px 8px;border-top:1px solid rgba(255,255,255,.08)}
+.plan-chip2{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.07);margin-bottom:8px}
+.chip-name{font-family:var(--display);font-size:12px;font-weight:700;color:#fff}
+.chip-sub{font-size:10px;color:rgba(255,255,255,.45)}
+.upg-btn{font-size:11px;padding:5px 11px;border-radius:8px;background:var(--gg);color:#fff;font-weight:700;border:none;cursor:pointer;font-family:var(--font);box-shadow:0 0 10px rgba(34,197,94,.3)}
+.user-row{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.05);border:none;cursor:pointer;font-family:var(--font);transition:background .15s;margin-bottom:6px}
+.user-row:hover{background:rgba(255,255,255,.1)}
+.user-av2{width:26px;height:26px;border-radius:50%;background:rgba(34,197,94,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#22c55e;overflow:hidden;flex-shrink:0}
+.user-av2 img{width:100%;height:100%;object-fit:cover}
+.user-nm2{font-size:12px;font-weight:500;color:#fff}
+.made-in{font-size:10px;color:rgba(255,255,255,.25);text-align:center;padding-top:4px}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{display:flex;align-items:center;gap:10px;padding:11px 22px;background:var(--white);border-bottom:1px solid var(--gray3);flex-shrink:0}
+.topbar-left{flex:1}
+.topbar-title{font-family:var(--display);font-size:15px;font-weight:700;color:var(--text1)}
+.topbar-sub{font-size:11px;color:var(--text3)}
+.topbar-actions{display:flex;align-items:center;gap:7px}
+.offline-badge{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:8px;background:var(--g4);border:1px solid rgba(34,197,94,.25);font-size:11px;font-weight:600;color:var(--g1)}
+.offline-dot{width:6px;height:6px;border-radius:50%;background:var(--g1);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.emerg-topbtn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:9px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.06);color:#dc2626;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s}
+.emerg-topbtn:hover{background:#dc2626;color:#fff}
+.epulse{width:6px;height:6px;border-radius:50%;background:#dc2626;animation:pulse 1.4s infinite}
+
+/* CHAT */
+#panel-chat{display:flex;flex-direction:column;flex:1;overflow:hidden}
+.chat-wrap{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:16px}
+.welcome-wrap{max-width:580px;margin:0 auto;text-align:center;padding:30px 20px 18px}
+.welcome-icon2{width:52px;height:52px;border-radius:15px;background:var(--gg);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 0 24px rgba(34,197,94,.25)}
+.welcome-icon2 svg{width:26px;height:26px;fill:#fff}
+.welcome-h{font-family:var(--display);font-size:22px;font-weight:800;margin-bottom:6px;color:var(--text1)}
+.welcome-p{font-size:13px;color:var(--text3);line-height:1.65}
+.chips-area{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:16px}
+.chip2{font-size:12px;padding:6px 14px;border-radius:20px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text2);cursor:pointer;transition:all .15s;box-shadow:var(--shadow)}
+.chip2:hover{border-color:var(--g1);color:var(--g1);background:var(--g4);transform:translateY(-1px)}
+
+/* MESSAGES */
+.msg-row{display:flex;gap:10px;max-width:860px;animation:rise .22s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg-row.usr{flex-direction:row-reverse;margin-left:auto}
+.msg-av3{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;margin-top:2px;overflow:hidden}
+.msg-row.bot .msg-av3{background:var(--gg);color:#fff;box-shadow:0 0 12px rgba(34,197,94,.2)}
+.msg-row.usr .msg-av3{background:var(--gray2);color:var(--text2);border:1px solid var(--gray3)}
+.msg-row.usr .msg-av3 img{width:100%;height:100%;object-fit:cover}
+.msg-body3{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+.bubble3{padding:12px 15px;border-radius:15px;font-size:14px;line-height:1.7;word-break:break-word}
+.msg-row.bot .bubble3{background:var(--white);border:1px solid var(--gray3);border-radius:4px 15px 15px 15px;box-shadow:var(--shadow)}
+.msg-row.usr .bubble3{background:var(--g1);color:#fff;border-radius:15px 4px 15px 15px}
+.bubble3.thinking{color:var(--text4);font-style:italic}
+.msg-time3{font-size:10px;color:var(--text4);padding:0 3px}
+.msg-row.usr .msg-time3{text-align:right}
+
+/* OFFLINE BADGE on message */
+.offline-msg-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;padding:3px 9px;border-radius:8px;background:var(--g4);color:var(--g1);border:1px solid rgba(34,197,94,.25);margin-top:5px;font-weight:600}
+
+/* STRUCTURED ANSWER */
+.ans-card2{background:var(--white);border:1px solid var(--gray3);border-radius:13px;overflow:hidden;box-shadow:var(--shadow);margin-top:5px}
+.ans-tabs2{display:flex;border-bottom:1px solid var(--gray3);background:var(--gray1);overflow-x:auto}
+.ans-tabs2::-webkit-scrollbar{height:0}
+.atab{font-size:12px;font-weight:600;padding:8px 14px;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;background:transparent;border-top:none;border-left:none;border-right:none;font-family:var(--font);white-space:nowrap;transition:all .15s}
+.atab:hover{color:var(--text1)}
+.atab.on{color:var(--g1);border-bottom-color:var(--g1);background:var(--white)}
+.abody{padding:14px 16px;display:none;font-size:14px;line-height:1.7;color:var(--text2)}
+.abody.on{display:block}
+.ans-steps2{display:flex;flex-direction:column;gap:8px}
+.ans-step2{display:flex;gap:10px;align-items:flex-start}
+.step-n{width:22px;height:22px;border-radius:50%;background:var(--g1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-t{font-size:13px;color:var(--text2);line-height:1.55}
+.tip-box2{padding:10px 13px;border-radius:9px;background:var(--g4);border:1px solid rgba(34,197,94,.2);font-size:12px;color:#15803d;display:flex;gap:8px;margin-top:6px}
+.doctor-card{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:12px 14px;margin-top:6px}
+.doctor-title{font-size:12px;font-weight:700;color:#1d4ed8;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.doctor-body{font-size:12px;color:#1e40af;line-height:1.55}
+.scam-card{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid rgba(249,115,22,.25);border-radius:10px;padding:12px 14px;margin-top:6px}
+.scam-title{font-size:12px;font-weight:700;color:#c2410c;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.scam-body{font-size:12px;color:#9a3412;line-height:1.55}
+
+/* FORMAT BUTTONS */
+.fmt-row2{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.fmt-btn2{font-size:11px;padding:5px 12px;border-radius:8px;border:1px solid var(--gray3);background:var(--white);color:var(--text3);cursor:pointer;font-family:var(--font);transition:all .15s;box-shadow:var(--shadow);font-weight:500}
+.fmt-btn2:hover{border-color:var(--g1);color:var(--g1)}
+.fmt-btn2.on{background:var(--g1);color:#fff;border-color:var(--g1)}
+.fmt-btn2.playing{background:#3b82f6;color:#fff;border-color:#3b82f6}
+
+/* INPUT */
+.input-sec{padding:13px 22px;border-top:1px solid var(--gray3);background:var(--white);flex-shrink:0}
+.limit-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12px;color:var(--warning)}
+.limit-track2{flex:1;height:3px;border-radius:2px;background:var(--gray3);overflow:hidden}
+.limit-fill2{height:100%;background:var(--warning);border-radius:2px;transition:width .3s}
+.input-wrap2{display:flex;gap:8px;align-items:flex-end;padding:11px 13px;border-radius:13px;border:1.5px solid var(--gray3);background:var(--white);transition:border-color .15s;box-shadow:var(--shadow)}
+.input-wrap2:focus-within{border-color:var(--g1);box-shadow:0 0 0 3px rgba(34,197,94,.08)}
+textarea#inp{flex:1;border:none;outline:none;background:transparent;font-size:14px;font-family:var(--font);color:var(--text1);resize:none;height:42px;max-height:110px;line-height:1.5}
+textarea#inp::placeholder{color:var(--text4)}
+.ibtns2{display:flex;gap:6px;flex-shrink:0}
+.ibtn2{width:38px;height:38px;border-radius:10px;border:1px solid var(--gray3);background:var(--white);color:var(--text3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.ibtn2:hover{border-color:var(--g1);color:var(--g1)}
+.ibtn2 svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ibtn2.send{background:var(--g1);border-color:var(--g1);color:#fff;box-shadow:0 0 14px rgba(34,197,94,.3)}
+.ibtn2.send:hover{background:var(--g2);box-shadow:0 0 20px rgba(34,197,94,.4)}
+.ibtn2.send:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.ibtn2.rec{border-color:var(--danger);color:var(--danger);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.input-hint2{font-size:11px;color:var(--text4);margin-top:6px;text-align:center}
+
+/* PANELS */
+.panel{display:none;flex:1;overflow-y:auto;padding:22px}
+.panel-h{font-family:var(--display);font-size:18px;font-weight:800;margin-bottom:18px;color:var(--text1)}
+.pcard{background:var(--white);border:1px solid var(--gray3);border-radius:13px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.pcard-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:13px}
+.pfield{margin-bottom:11px}
+.pflabel{font-size:12px;color:var(--text2);margin-bottom:5px;display:block;font-weight:500}
+.pfinput,.pfsel{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text1);font-size:13px;font-family:var(--font);outline:none;transition:border-color .15s}
+.pfinput:focus,.pfsel:focus{border-color:var(--g1)}
+.pfinput::placeholder{color:var(--text4)}
+.pftarea{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text1);font-size:13px;font-family:var(--font);resize:vertical;min-height:70px;outline:none}
+.pftarea:focus{border-color:var(--g1)}
+.pftarea::placeholder{color:var(--text4)}
+.grid2b{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pills2{display:flex;flex-wrap:wrap;gap:6px}
+.spill2{font-size:12px;padding:5px 12px;border-radius:10px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text2);cursor:pointer;transition:all .15s}
+.spill2:hover{border-color:var(--g1)}
+.spill2.on{background:var(--g1);color:#fff;border-color:var(--g1)}
+.tog-row2{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray3)}
+.tog-row2:last-child{border-bottom:none;padding-bottom:0}
+.tog-lbl{font-size:13px;font-weight:500;color:var(--text1)}
+.tog-sub2{font-size:11px;color:var(--text3);margin-top:2px}
+.tog2{position:relative;width:36px;height:20px;flex-shrink:0}
+.tog2 input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;z-index:1;margin:0}
+.tog2-track{position:absolute;inset:0;border-radius:10px;background:var(--gray3);transition:background .18s}
+.tog2 input:checked~.tog2-track{background:var(--g1)}
+.tog2-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .18s;pointer-events:none;box-shadow:var(--shadow)}
+.tog2 input:checked~.tog2-track .tog2-thumb{transform:translateX(16px)}
+.sbtn2{width:100%;padding:12px;border-radius:11px;border:none;background:var(--gg);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:var(--display);box-shadow:0 0 18px rgba(34,197,94,.2);transition:all .15s}
+.sbtn2:hover{transform:translateY(-1px);box-shadow:0 0 25px rgba(34,197,94,.3)}
+.toast2{display:none;font-size:13px;color:var(--g1);margin-top:10px;padding:9px;border-radius:9px;background:var(--g4);border:1px solid rgba(34,197,94,.3);text-align:center}
+.stars2{display:flex;gap:6px;margin:8px 0}
+.star2{width:28px;height:28px;cursor:pointer;border:none;background:transparent;padding:0}
+.star2 svg{width:28px;height:28px;stroke:var(--gray3);fill:transparent;stroke-width:1.5;transition:all .15s}
+.star2.on svg{stroke:var(--warning);fill:var(--warning)}
+.ftags2{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.ftag2{font-size:12px;padding:5px 12px;border-radius:10px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text2);cursor:pointer;transition:all .15s}
+.ftag2.on{background:var(--g1);color:#fff;border-color:var(--g1)}
+.feed-item2{background:var(--white);border:1px solid var(--gray3);border-radius:11px;padding:13px;margin-bottom:10px;box-shadow:var(--shadow)}
+.feed-top2{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.feed-av2{width:26px;height:26px;border-radius:50%;background:var(--gg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.feed-nm2{font-size:13px;font-weight:600}
+.feed-lang2{font-size:10px;padding:2px 7px;border-radius:6px;background:var(--g3);color:var(--g2);font-weight:500}
+.feed-time2{font-size:10px;color:var(--text4);margin-left:auto}
+.feed-tag2{font-size:10px;padding:2px 8px;border-radius:6px;background:var(--g4);color:var(--g1);display:inline-block;margin-bottom:5px;font-weight:500}
+.feed-txt2{font-size:13px;color:var(--text2);line-height:1.55}
+.vote-btn2{font-size:11px;padding:4px 10px;border-radius:8px;border:1px solid var(--gray3);background:var(--white);color:var(--text3);cursor:pointer;margin-top:7px;font-family:var(--font)}
+.vote-btn2:hover{border-color:var(--g1);color:var(--g1)}
+
+/* ABOUT */
+.about-hero2{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid rgba(34,197,94,.2);border-radius:16px;padding:28px 24px;margin-bottom:16px;text-align:center}
+.about-hero2 h1{font-family:var(--display);font-size:24px;font-weight:800;margin-bottom:6px}
+.about-hero2 h1 span{color:var(--g1)}
+.about-hero2 p{font-size:13px;color:var(--text2);line-height:1.65}
+.feat-grid2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.feat-card2{background:var(--white);border:1px solid var(--gray3);border-radius:12px;padding:13px;box-shadow:var(--shadow);transition:all .15s}
+.feat-card2:hover{border-color:var(--g1);transform:translateY(-2px)}
+.feat-icon2{font-size:20px;margin-bottom:6px}
+.feat-nm2{font-size:13px;font-weight:700;margin-bottom:2px;font-family:var(--display)}
+.feat-desc2{font-size:12px;color:var(--text3);line-height:1.5}
+.feat-tag3{font-size:10px;padding:2px 8px;border-radius:6px;display:inline-block;margin-top:5px;font-weight:600}
+.ft-free{background:var(--g3);color:var(--g2)}
+.ft-pro{background:#fef3c7;color:#92400e}
+.ft-max{background:#ede9fe;color:#6d28d9}
+
+/* EMERGENCY MODAL */
+.emerg-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+.emerg-overlay.open{display:flex!important}
+.emerg-modal{background:var(--white);border:2px solid rgba(239,68,68,.25);border-radius:20px;padding:22px;max-width:540px;width:100%;max-height:88vh;display:flex;flex-direction:column;gap:11px;box-shadow:var(--shadow-lg)}
+.emerg-title{font-family:var(--display);font-size:16px;font-weight:800;color:#dc2626;display:flex;align-items:center;gap:8px}
+.emerg-sub{font-size:12px;color:var(--text3)}
+.esrch2{width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text1);font-size:13px;outline:none;font-family:var(--font)}
+.esrch2:focus{border-color:rgba(239,68,68,.4)}
+.elist2{overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:7px;min-height:200px}
+.eitem2{padding:11px 14px;border-radius:10px;background:var(--gray1);border:1px solid var(--gray3)}
+.eitem-title2{font-size:13px;font-weight:700;margin-bottom:5px;color:var(--text1);font-family:var(--display)}
+.eitem-ans2{font-size:12px;color:var(--text2);line-height:1.65}
+.eclose{padding:10px;border-radius:10px;border:1.5px solid var(--gray3);background:var(--white);color:var(--text2);font-size:13px;cursor:pointer;font-family:var(--font);font-weight:600;flex-shrink:0;transition:all .15s}
+.eclose:hover{border-color:var(--g1);color:var(--g1)}
+
+@media(max-width:750px){.sidebar{display:none}.feat-grid2{grid-template-columns:1fr 1fr}.grid2b{grid-template-columns:1fr}.panel{padding:15px}.chat-wrap,.input-sec{padding-left:15px;padding-right:15px}}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div class="auth-overlay" id="auth-overlay">
+  <div class="auth-box">
+    <div class="auth-logo"><svg viewBox="0 0 24 24"><path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/></svg></div>
+    <div class="auth-title">Welcome to Samadhan AI</div>
+    <div class="auth-sub">India's most powerful AI problem solver — made for you, by a student from Faridabad 🇮🇳</div>
+    <div class="auth-feats">
+      <div class="auth-feat"><span class="feat-check">✓</span>Personalised answers based on your profile</div>
+      <div class="auth-feat"><span class="feat-check">✓</span>40+ languages — Hindi, English, Arabic, French</div>
+      <div class="auth-feat"><span class="feat-check">✓</span>Emergency offline mode — works without internet</div>
+      <div class="auth-feat"><span class="feat-check">✓</span>Doctor mode + Scam detector + Legal guide</div>
+    </div>
+    <button class="google-btn" onclick="signInWithGoogle()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
+      Continue with Google
+    </button>
+    <div class="auth-or">or</div>
+    <button class="skip-btn" onclick="skipAuth()">Continue without signing in</button>
+    <div style="font-size:11px;color:var(--text4);margin-top:12px">Made with ❤️ in Faridabad, India</div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="pay-modal">
+  <div class="pay-box">
+    <button class="pay-close" onclick="closePay()">✕</button>
+    <div class="pay-title">⚡ Upgrade Samadhan AI</div>
+    <div class="pay-sub">Choose your country and plan. Cancel anytime.</div>
+    <div class="country-row">
+      <label class="clabel">Your country</label>
+      <select class="csel" id="country-sel" onchange="updatePrices()">
+        <option value="IN">🇮🇳 India (₹ INR)</option>
+        <option value="US">🇺🇸 United States ($ USD)</option>
+        <option value="GB">🇬🇧 United Kingdom (£ GBP)</option>
+        <option value="AE">🇦🇪 UAE (AED)</option>
+        <option value="AU">🇦🇺 Australia (A$)</option>
+        <option value="CA">🇨🇦 Canada (C$)</option>
+        <option value="SG">🇸🇬 Singapore (S$)</option>
+        <option value="NG">🇳🇬 Nigeria ($)</option>
+        <option value="KE">🇰🇪 Kenya (KSh)</option>
+        <option value="BD">🇧🇩 Bangladesh (৳)</option>
+        <option value="PK">🇵🇰 Pakistan (₨)</option>
+        <option value="FR">🇫🇷 France (€)</option>
+        <option value="DE">🇩🇪 Germany (€)</option>
+        <option value="OTHER">🌍 Other countries ($)</option>
+      </select>
+    </div>
+    <div class="plans-grid">
+      <div class="plan-opt sel" id="plan-free" onclick="selPlan('free')">
+        <div class="plan-icon">🆓</div>
+        <div class="plan-name3">Free</div>
+        <div class="plan-price3">₹0</div>
+        <div class="plan-period2">/month</div>
+        <ul class="plan-feats2">
+          <li class="plan-feat2">10 questions/day</li>
+          <li class="plan-feat2">Emergency offline</li>
+          <li class="plan-feat2">Basic languages</li>
+        </ul>
+      </div>
+      <div class="plan-opt popular" id="plan-pro" onclick="selPlan('pro')">
+        <div class="plan-icon">⚡</div>
+        <div class="plan-name3">Pro</div>
+        <div class="plan-price3" id="pro-price">₹99</div>
+        <div class="plan-period2">/month</div>
+        <ul class="plan-feats2">
+          <li class="plan-feat2">Unlimited questions</li>
+          <li class="plan-feat2">All 40+ languages</li>
+          <li class="plan-feat2">Voice + Audio</li>
+          <li class="plan-feat2">Doctor mode</li>
+          <li class="plan-feat2">Scam detector</li>
+        </ul>
+      </div>
+      <div class="plan-opt best" id="plan-max" onclick="selPlan('max')">
+        <div class="plan-icon">👑</div>
+        <div class="plan-name3">Pro Max</div>
+        <div class="plan-price3" id="max-price">₹199</div>
+        <div class="plan-period2">/month</div>
+        <ul class="plan-feats2">
+          <li class="plan-feat2">Everything in Pro</li>
+          <li class="plan-feat2">Full offline AI</li>
+          <li class="plan-feat2">Legal guide</li>
+          <li class="plan-feat2">Mental health</li>
+          <li class="plan-feat2">Family sharing (5)</li>
+        </ul>
+      </div>
+    </div>
+    <button class="pay-cta" id="pay-cta-btn" onclick="processPayment()">Subscribe Now →</button>
+    <div class="pay-note">🔒 Secure · Cancel anytime · No hidden charges</div>
+    <div class="pay-methods">
+      <span class="pay-method">UPI</span>
+      <span class="pay-method">Debit Card</span>
+      <span class="pay-method">Credit Card</span>
+      <span class="pay-method">Net Banking</span>
+      <span class="pay-method">Stripe (Global)</span>
+    </div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-wrap"><svg viewBox="0 0 24 24"><path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/></svg></div>
+    <div><div class="logo-txt">Samadhan AI</div><div class="logo-sub2">समाधान · Problem Solver</div></div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-lbl">Main</div>
+    <button class="nav-btn on" onclick="showPanel('chat',this)">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Chat
+    </button>
+    <button class="nav-btn" onclick="showPanel('settings',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>My Profile
+    </button>
+    <button class="nav-btn" onclick="showPanel('feedback',this)">
+      <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>Feedback
+    </button>
+    <button class="nav-btn" onclick="showPanel('about',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>About
+    </button>
+    <div class="nav-lbl" style="margin-top:6px">Features</div>
+    <button class="nav-btn" onclick="openEmerg()">
+      <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Emergency Guide
+      <span class="nav-badge2" style="background:rgba(239,68,68,.2);color:#f87171">Offline</span>
+    </button>
+    <button class="nav-btn" onclick="activateMode('doctor')">
+      <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Doctor Mode
+      <span class="nav-badge2" id="doctor-badge" style="background:rgba(59,130,246,.15);color:#60a5fa">Pro</span>
+    </button>
+    <button class="nav-btn" onclick="activateMode('scam')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Scam Detector
+      <span class="nav-badge2" id="scam-badge" style="background:rgba(245,158,11,.15);color:#fbbf24">Pro</span>
+    </button>
+    <button class="nav-btn" onclick="activateMode('legal')">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Legal Guide
+      <span class="nav-badge2" id="legal-badge" style="background:rgba(139,92,246,.15);color:#a78bfa">Max</span>
+    </button>
+    <div class="nav-lbl" style="margin-top:6px">Language</div>
+    <div style="padding:0 3px">
+      <div class="lang-pills">
+        <button class="lpill on" onclick="setLang('en',this)">EN</button>
+        <button class="lpill" onclick="setLang('hi',this)">हिं</button>
+        <button class="lpill" onclick="setLang('ar',this)">عر</button>
+        <button class="lpill" onclick="setLang('fr',this)">FR</button>
+        <button class="lpill" onclick="setLang('ta',this)">தமி</button>
+        <button class="lpill" onclick="setLang('bn',this)">বাং</button>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-foot">
+    <div class="plan-chip2">
+      <div><div class="chip-name" id="plan-nm">Free Plan</div><div class="chip-sub" id="plan-sb">10 questions/day</div></div>
+      <button class="upg-btn" onclick="openPay()">Upgrade ↗</button>
+    </div>
+    <button class="user-row" onclick="handleUser()">
+      <div class="user-av2" id="user-av3">?</div>
+      <div class="user-nm2" id="user-nm3">Not signed in</div>
+    </button>
+    <div class="made-in">Made with ❤️ in Faridabad, India 🇮🇳</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-title" id="topbar-title">Chat with Samadhan AI</div>
+      <div class="topbar-sub" id="topbar-sub">Ask anything — get instant structured help</div>
+    </div>
+    <div class="topbar-actions">
+      <div class="offline-badge" id="offline-indicator">
+        <span class="offline-dot"></span> Online
+      </div>
+      <div class="offline-badge" id="mode-indicator" style="display:none;background:#eff6ff;border-color:rgba(59,130,246,.25);color:#3b82f6">
+        <span style="font-size:14px" id="mode-icon">🏥</span> <span id="mode-label">Doctor Mode</span>
+      </div>
+      <button class="emerg-topbtn" onclick="openEmerg()"><span class="epulse"></span>Emergency</button>
+    </div>
+  </div>
+
+  <!-- CHAT PANEL -->
+  <div id="panel-chat" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+    <div class="chat-wrap" id="chat-area">
+      <div class="welcome-wrap" id="welcome-box">
+        <div class="welcome-icon2"><svg viewBox="0 0 24 24"><path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/></svg></div>
+        <div class="welcome-h" id="welcome-h">How can I help you today?</div>
+        <div class="welcome-p" id="welcome-p">Ask me anything — WiFi, health, job, money, stress, legal rights. I'll give you a clear structured answer.</div>
+        <div class="chips-area" id="chips-area"></div>
+      </div>
+    </div>
+    <div class="input-sec">
+      <div class="limit-row" id="limit-bar" style="display:none">
+        <span id="limit-txt">0/10</span>
+        <div class="limit-track2"><div class="limit-fill2" id="limit-fill" style="width:0%"></div></div>
+        <span style="color:var(--g1);cursor:pointer;font-weight:700" onclick="openPay()">Upgrade ↗</span>
+      </div>
+      <div class="input-wrap2">
+        <textarea id="inp" placeholder="Type your problem here... (any language)" onkeydown="onKey(event)" oninput="grow(this)"></textarea>
+        <div class="ibtns2">
+          <button class="ibtn2" id="mic-btn" onclick="startVoice()" title="Voice input">
+            <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <button class="ibtn2 send" id="send-btn" onclick="send()" disabled>
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="input-hint2">Enter to send · Shift+Enter new line · 🎤 voice input</div>
+    </div>
+  </div>
+
+  <!-- SETTINGS PANEL -->
+  <div class="panel" id="panel-settings">
+    <div class="panel-h">My Profile</div>
+    <div class="pcard">
+      <div class="pcard-title">Personal info</div>
+      <div class="grid2b">
+        <div class="pfield"><div class="pflabel">Your name</div><input class="pfinput" id="p-name" placeholder="e.g. Rahul"></div>
+        <div class="pfield"><div class="pflabel">Age group</div>
+          <select class="pfsel" id="p-age"><option value="">Select</option><option>Under 18</option><option>18-25</option><option>26-35</option><option>36-50</option><option>50+</option></select>
+        </div>
+        <div class="pfield"><div class="pflabel">Occupation</div>
+          <select class="pfsel" id="p-job"><option value="">Select</option><option>Student</option><option>Teacher</option><option>Doctor/Nurse</option><option>Engineer</option><option>Business owner</option><option>Farmer</option><option>Homemaker</option><option>Govt employee</option><option>Daily wage worker</option><option>Other</option></select>
+        </div>
+        <div class="pfield"><div class="pflabel">Education</div>
+          <select class="pfsel" id="p-edu"><option value="">Select</option><option>No formal education</option><option>Primary school</option><option>10th</option><option>12th / HSC</option><option>Graduate</option><option>Postgraduate</option></select>
+        </div>
+      </div>
+      <div class="pfield"><div class="pflabel">Your city</div><input class="pfinput" id="p-city" placeholder="e.g. Faridabad, Haryana"></div>
+    </div>
+    <div class="pcard"><div class="pcard-title">Topics you care about</div><div class="pills2" id="topic-pills"></div></div>
+    <div class="pcard">
+      <div class="pcard-title">Answer style</div>
+      <div class="pfield"><div class="pflabel">Length</div><div class="pills2" id="len-pills"></div></div>
+      <div class="pfield" style="margin-top:10px"><div class="pflabel">Tone</div><div class="pills2" id="tone-pills"></div></div>
+      <div style="margin-top:10px">
+        <div class="tog-row2"><div><div class="tog-lbl">Simple words only</div><div class="tog-sub2">No difficult vocabulary</div></div><label class="tog2"><input type="checkbox" id="tog-simple"><div class="tog2-track"><div class="tog2-thumb"></div></div></label></div>
+        <div class="tog-row2"><div><div class="tog-lbl">Always include examples</div><div class="tog-sub2">Real-life example with every answer</div></div><label class="tog2"><input type="checkbox" id="tog-ex" checked><div class="tog2-track"><div class="tog2-thumb"></div></div></label></div>
+        <div class="tog-row2"><div><div class="tog-lbl">Show ₹ cost estimates</div><div class="tog-sub2">Indian rupee costs when relevant</div></div><label class="tog2"><input type="checkbox" id="tog-cost"><div class="tog2-track"><div class="tog2-thumb"></div></div></label></div>
+      </div>
+    </div>
+    <div class="pcard"><div class="pcard-title">Anything else about you</div><textarea class="pftarea" id="p-free" placeholder="e.g. I have diabetes. PCB student. Prefer short answers..."></textarea></div>
+    <button class="sbtn2" onclick="saveProfile()">Save Preferences</button>
+    <div class="toast2" id="save-toast">✓ Saved! AI will personalise every answer for you.</div>
+  </div>
+
+  <!-- FEEDBACK PANEL -->
+  <div class="panel" id="panel-feedback">
+    <div class="panel-h">Feedback & Ideas</div>
+    <div class="pcard">
+      <div class="pcard-title">Rate Samadhan AI</div>
+      <div class="stars2" id="star-row"></div>
+      <div class="pflabel" style="margin:8px 0 5px">What do you want added?</div>
+      <div class="ftags2" id="feat-tags"></div>
+      <div class="grid2b" style="margin-top:10px">
+        <input class="pfinput" id="fb-name" placeholder="Your name (optional)">
+        <input class="pfinput" id="fb-lang" placeholder="Your language">
+      </div>
+      <textarea class="pftarea" id="fb-text" style="margin-top:10px" placeholder="Describe your idea or feedback (any language)..."></textarea>
+      <button class="sbtn2" style="margin-top:10px" onclick="submitFB()">Submit Feedback</button>
+      <div class="toast2" id="fb-toast">✓ Thank you! Your feedback helps us improve.</div>
+    </div>
+    <div id="feed-list"></div>
+  </div>
+
+  <!-- ABOUT PANEL -->
+  <div class="panel" id="panel-about">
+    <div class="panel-h">About Samadhan AI</div>
+    <div class="about-hero2">
+      <h1>⚡ Samadhan <span>AI</span></h1>
+      <p>Built by a student from <strong>Faridabad, Haryana, India</strong><br>
+      Solving real problems for Indians and the world.<br>
+      <span style="color:var(--text3);font-size:12px">Powered by Llama AI — Free to use</span></p>
+    </div>
+    <div class="feat-grid2">
+      <div class="feat-card2"><div class="feat-icon2">🌍</div><div class="feat-nm2">40+ Languages</div><div class="feat-desc2">Hindi, English, Arabic, French, Tamil, Bengali and more.</div><span class="feat-tag3 ft-free">Free</span></div>
+      <div class="feat-card2"><div class="feat-icon2">🎤</div><div class="feat-nm2">Voice Input</div><div class="feat-desc2">Speak your problem — no typing needed.</div><span class="feat-tag3 ft-free">Free</span></div>
+      <div class="feat-card2"><div class="feat-icon2">🔊</div><div class="feat-nm2">Audio Answers</div><div class="feat-desc2">Listen to answers in your language.</div><span class="feat-tag3 ft-free">Free</span></div>
+      <div class="feat-card2"><div class="feat-icon2">🔴</div><div class="feat-nm2">Emergency Offline</div><div class="feat-desc2">15 emergency guides — no internet needed.</div><span class="feat-tag3 ft-free">Free</span></div>
+      <div class="feat-card2"><div class="feat-icon2">🏥</div><div class="feat-nm2">Doctor Mode</div><div class="feat-desc2">Describe symptoms → get medical guidance.</div><span class="feat-tag3 ft-pro">Pro</span></div>
+      <div class="feat-card2"><div class="feat-icon2">🔍</div><div class="feat-nm2">Scam Detector</div><div class="feat-desc2">Paste any message → AI checks if it's a scam.</div><span class="feat-tag3 ft-pro">Pro</span></div>
+      <div class="feat-card2"><div class="feat-icon2">⚖️</div><div class="feat-nm2">Legal Guide</div><div class="feat-desc2">Know your rights — tenant, worker, consumer.</div><span class="feat-tag3 ft-max">Max</span></div>
+      <div class="feat-card2"><div class="feat-icon2">🧠</div><div class="feat-nm2">Mental Health</div><div class="feat-desc2">Daily check-in, stress tips, professional referral.</div><span class="feat-tag3 ft-max">Max</span></div>
+      <div class="feat-card2"><div class="feat-icon2">📴</div><div class="feat-nm2">Full Offline AI</div><div class="feat-desc2">ALL answers work offline — Pro Max only.</div><span class="feat-tag3 ft-max">Max</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMERGENCY MODAL -->
+<div class="emerg-overlay" id="emerg-overlay">
+  <div class="emerg-modal">
+    <div class="emerg-title"><span class="epulse"></span>Emergency Guide — Works Offline</div>
+    <div class="emerg-sub">All 15 guides pre-saved. No internet needed. Works always.</div>
+    <input class="esrch2" id="esrch" placeholder="Search: snake, fever, burn, flood, heart..." oninput="filterEmerg(this.value)">
+    <div class="elist2" id="emerg-list"></div>
+    <button class="eclose" onclick="closeEmerg()">Close</button>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+const firebaseConfig = {
+  apiKey:"AIzaSyDdZzZVEMMFDzW_Nn5Q6G932KbY-rV_JcE",
+  authDomain:"samadhan-ai-f0331.firebaseapp.com",
+  projectId:"samadhan-ai-f0331",
+  storageBucket:"samadhan-ai-f0331.firebasestorage.app",
+  messagingSenderId:"587540644923",
+  appId:"1:587540644923:web:04cc01c2ee316ec3f0881e"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+window._auth = auth; window._provider = provider; window._signOut = signOut;
+window.signInWithGoogle = async function() {
+  try {
+    const r = await signInWithPopup(auth, provider);
+    window._user = r.user;
+    updateUserUI(r.user);
+    document.getElementById('auth-overlay').classList.add('hidden');
+    var fn = r.user.displayName ? r.user.displayName.split(' ')[0] : '';
+    if(fn && !document.getElementById('p-name').value) document.getElementById('p-name').value = fn;
+    document.getElementById('topbar-sub').textContent = 'Welcome back, ' + fn + '! Ask me anything.';
+  } catch(e) { if(e.code !== 'auth/popup-closed-by-user') alert('Sign in failed. Please try again.'); }
+};
+window.skipAuth = function() { document.getElementById('auth-overlay').classList.add('hidden'); window._user = null; };
+window.handleUser = function() {
+  if(window._user) {
+    if(confirm('Sign out from Samadhan AI?')) {
+      signOut(auth).then(() => { window._user = null; updateUserUI(null); document.getElementById('auth-overlay').classList.remove('hidden'); });
+    }
+  } else { document.getElementById('auth-overlay').classList.remove('hidden'); }
+};
+function updateUserUI(user) {
+  var av = document.getElementById('user-av3');
+  var nm = document.getElementById('user-nm3');
+  if(user) { av.innerHTML = user.photoURL ? '<img src="'+user.photoURL+'">' : (user.displayName?user.displayName[0].toUpperCase():'U'); nm.textContent = user.displayName?user.displayName.split(' ')[0]:'User'; }
+  else { av.textContent = '?'; nm.textContent = 'Not signed in'; }
+}
+onAuthStateChanged(auth, function(user) {
+  if(user) { window._user = user; updateUserUI(user); document.getElementById('auth-overlay').classList.add('hidden'); var fn=user.displayName?user.displayName.split(' ')[0]:''; if(fn&&!document.getElementById('p-name').value) document.getElementById('p-name').value=fn; }
+});
+</script>
+
+<script>
+// =============================================
+// PASTE YOUR GROQ KEY HERE
+// Get free: console.groq.com
+// =============================================
+var GROQ_KEY = 'YOUR_GROQ_KEY_HERE';
+var MODEL = 'llama-3.1-8b-instant';
+var API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+// PRICING
+var PRICES = {
+  IN:{pro:'₹99',max:'₹199',proV:99,maxV:199,cur:'INR',method:'razorpay'},
+  US:{pro:'$4.99',max:'$9.99',proV:499,maxV:999,cur:'USD',method:'stripe'},
+  GB:{pro:'£3.99',max:'£7.99',proV:399,maxV:799,cur:'GBP',method:'stripe'},
+  AE:{pro:'AED 18',max:'AED 36',proV:1800,maxV:3600,cur:'AED',method:'stripe'},
+  AU:{pro:'A$7.99',max:'A$15.99',proV:799,maxV:1599,cur:'AUD',method:'stripe'},
+  CA:{pro:'C$6.99',max:'C$13.99',proV:699,maxV:1399,cur:'CAD',method:'stripe'},
+  SG:{pro:'S$6.99',max:'S$13.99',proV:699,maxV:1399,cur:'SGD',method:'stripe'},
+  NG:{pro:'$2.99',max:'$5.99',proV:299,maxV:599,cur:'USD',method:'stripe'},
+  KE:{pro:'$1.99',max:'$3.99',proV:199,maxV:399,cur:'USD',method:'stripe'},
+  BD:{pro:'৳299',max:'৳599',proV:299,maxV:599,cur:'BDT',method:'stripe'},
+  PK:{pro:'₨1,399',max:'₨2,799',proV:1399,maxV:2799,cur:'PKR',method:'stripe'},
+  FR:{pro:'€4.99',max:'€9.99',proV:499,maxV:999,cur:'EUR',method:'stripe'},
+  DE:{pro:'€4.99',max:'€9.99',proV:499,maxV:999,cur:'EUR',method:'stripe'},
+  OTHER:{pro:'$4.99',max:'$9.99',proV:499,maxV:999,cur:'USD',method:'stripe'}
+};
+
+// STATE
+var lang='en', profile={}, starVal=0, selTags=new Set();
+var selTopics=new Set(['Health','Technology','Education']);
+var selLen='Short', selTone='Friendly';
+var loading=false, qCount=0, isPro=false, isMax=false;
+var FREE_LIMIT=10;
+var activeMode='general';
+var _activeUtter=null, _activeBtn=null;
+
+// OFFLINE KNOWLEDGE BASE — Pro Max feature
+var OFFLINE_KB = {
+  // Health
+  'fever': 'For fever: 1. Take paracetamol (500mg adults, as per weight for children). 2. Rest and drink lots of water. 3. Apply cool wet cloth on forehead. 4. If above 104°F or lasts more than 3 days — see doctor.',
+  'headache': 'For headache: 1. Take paracetamol or ibuprofen. 2. Rest in dark quiet room. 3. Apply cold or warm compress. 4. Stay hydrated. 5. If severe or sudden — seek immediate medical help.',
+  'cold cough': 'For cold/cough: 1. Drink warm water with honey and ginger. 2. Steam inhalation. 3. Rest well. 4. Vitamin C fruits. 5. Over-the-counter cough syrup. 6. If fever above 101°F — see doctor.',
+  'stomach pain': 'For stomach pain: 1. Rest and avoid spicy food. 2. Drink ORS or plain water. 3. Antacids for acidity. 4. If severe or vomiting — see doctor immediately.',
+  'wifi': 'Fix WiFi: 1. Restart router — unplug 30 sec, plug back. 2. Forget network and reconnect. 3. Check if other devices connect. 4. Call ISP helpline. 5. Reset router to factory settings if nothing works.',
+  'mobile slow': 'Fix slow phone: 1. Restart phone. 2. Clear app cache — Settings > Storage > Clear Cache. 3. Uninstall unused apps. 4. Free up storage space. 5. Turn off background app refresh.',
+  'stress': 'For stress/anxiety: 1. Deep breathing — inhale 4 sec, hold 4 sec, exhale 4 sec. 2. Take a 10-minute walk. 3. Talk to someone you trust. 4. Limit social media. 5. Sleep 7-8 hours. 6. If severe — talk to a professional.',
+  'money': 'Save money tips: 1. Track every expense daily. 2. 50/30/20 rule — 50% needs, 30% wants, 20% savings. 3. Cook at home vs eating out. 4. Emergency fund = 3 months expenses. 5. Invest in PPF or SIP monthly.',
+  'job': 'Job search tips: 1. Update LinkedIn profile completely. 2. Apply on Naukri, LinkedIn, Indeed daily. 3. Network — 70% jobs filled through connections. 4. Prepare resume with keywords from job description. 5. Follow up after every interview.',
+  'rent': 'Find rental room: 1. Check OLX, NoBroker, 99acres, MagicBricks. 2. Join local Facebook groups. 3. Visit area personally. 4. Check agreement carefully before signing. 5. Insist on proper rental agreement.',
+  'scam': 'Scam warning signs: 1. Too good to be true offers. 2. Urgent pressure to pay. 3. Asking for OTP or password. 4. Unknown numbers claiming to be bank/police. 5. Lottery you never entered. Never share OTP with anyone — even if they claim to be your bank.',
+  'blood pressure': 'For high BP: 1. Take medication as prescribed — never skip. 2. Reduce salt intake. 3. Exercise 30 min daily. 4. Avoid stress. 5. Monitor BP regularly. 6. Avoid smoking and alcohol.',
+  'diabetes': 'Diabetes management: 1. Take medication/insulin on time. 2. Check blood sugar regularly. 3. Avoid sugar and refined carbs. 4. Eat small frequent meals. 5. Exercise daily. 6. Regular doctor checkups.',
+  'tenant rights': 'Tenant rights India: 1. Right to receipt for every rent payment. 2. Landlord cannot enter without notice. 3. Security deposit max 2 months rent. 4. Proper notice required before eviction. 5. Right to basic amenities. Get all agreements in writing.',
+  'consumer rights': 'Consumer rights India: 1. Right to safety. 2. Right to information. 3. Right to choose. 4. Right to be heard. 5. File complaint at consumer forum — it is free. Call 1800-11-4000 for National Consumer Helpline.',
+};
+
+// EMERGENCY DATA
+var EMERGENCIES = [
+  {t:'🐍 Snake bite / Saanp ka kaatna',a:'1. Stay calm, do not panic.\n2. Keep bitten limb BELOW heart — do not move.\n3. Remove rings, watch near bite.\n4. Do NOT cut, suck or apply ice.\n5. Call 108 and go to hospital IMMEDIATELY.'},
+  {t:'❤️ Chest pain / Heart attack',a:'1. Sit upright — NOT flat.\n2. Loosen tight clothing.\n3. Give aspirin 325mg if available.\n4. Call 108 NOW.\n5. Start CPR if unconscious — 30 compressions + 2 breaths.'},
+  {t:'🧒 Child choking / Bachcha khana atka',a:'1. Give 5 firm back blows between shoulders.\n2. Then 5 abdominal thrusts.\n3. Repeat until object out.\n4. Call 108 if not resolved.'},
+  {t:'🌡️ High fever in child',a:'1. Give paracetamol per weight.\n2. Remove extra clothes.\n3. Cool wet cloth on forehead.\n4. Give water.\n5. Above 104°F or seizure — hospital immediately.'},
+  {t:'💨 Gas leak at home',a:'1. Do NOT switch any switch.\n2. Open all windows immediately.\n3. Turn off cylinder valve.\n4. Leave house.\n5. Call 101 from outside.'},
+  {t:'🌊 Flood safety',a:'1. Move to highest floor.\n2. Turn off electricity.\n3. Do NOT walk in floodwater.\n4. Signal from roof.\n5. Call 112.'},
+  {t:'🚗 Road accident',a:'1. Do NOT move injured person.\n2. Call 108 immediately.\n3. Press cloth on bleeding.\n4. Keep person talking.\n5. Note fleeing vehicle number.'},
+  {t:'⚡ Electric shock',a:'1. Do NOT touch person.\n2. Switch off main power.\n3. Use dry wood to separate.\n4. Call 108.\n5. CPR if not breathing.'},
+  {t:'🏊 Drowning',a:'1. Throw rope — do not jump.\n2. Call 108.\n3. Tilt head back, give breaths.\n4. CPR if no pulse.'},
+  {t:'🔥 Burn / Jalna',a:'1. Cool water 20 minutes.\n2. No toothpaste or butter.\n3. Cover with clean cloth.\n4. Call 108 for large burns.'},
+  {t:'🫁 Asthma attack',a:'1. Sit upright — never flat.\n2. Give inhaler immediately.\n3. Loosen clothing.\n4. Blue lips — call 108 NOW.'},
+  {t:'🌡️ Heat stroke / Loo lagna',a:'1. Cool place immediately.\n2. Remove clothes.\n3. Cool wet cloth on neck.\n4. Cold water if conscious.\n5. Call 108 if unconscious.'},
+  {t:'🐕 Dog bite',a:'1. Wash with soap 10 minutes.\n2. Apply Dettol.\n3. Hospital TODAY for anti-rabies.\n4. Do not delay.'},
+  {t:'🧠 Seizure / Fits',a:'1. Clear area.\n2. Turn on side.\n3. Nothing in mouth.\n4. Time it.\n5. Over 5 min — call 108.'},
+  {t:'😵 Unconscious person',a:'1. Call name, tap shoulder.\n2. Check breathing.\n3. Recovery position if breathing.\n4. CPR + call 108 if not breathing.'}
+];
+
+var CHIPS_DATA = {
+  en:['WiFi not working','Mental stress','How to earn money','Mobile is slow','Find room on rent','Job interview tips','Child has fever','Is this message a scam?'],
+  hi:['WiFi kaam nahi kar raha','Mental tanaav','Paisa kaise kamayein','Mobile slow','Kiray ka kamra','Interview tips','Bachche ko bukhaar','Kya yeh scam hai?'],
+  ar:['WiFi la yamal','Daghto nafsi','Kayfa aksibu mal','Hatif bati','Ghurfa lil ijar','Nasayih muqabala','Tifl marid','Hal hadha nasl?'],
+  fr:['WiFi marche pas','Stress mental','Gagner argent','Telephone lent','Trouver logement','Conseils entretien','Enfant malade','Est-ce une arnaque?'],
+  ta:['WiFi velai seyyavillai','Mana azhutham','Panam sampaadhikka','Mobile slow','Vaadagai arai','Velai tips','Kuzhandaiku kaaychal','Idhu scam-aa?'],
+  bn:['WiFi kaj korche na','Mansik chap','Taka kamano','Mobile slow','Bhari ghur','Job tips','Bachchaar jwor','Ei ki scam?']
+};
+var PLACEHOLDER_DATA = {en:'Type your problem here... (any language)',hi:'Apni samasya yahan likhein...',ar:'Uktub mushkilatak huna...',fr:'Ecrivez votre probleme...',ta:'Ungal sigkal ithere...',bn:'Apnar somosya likhun...'};
+
+var feedbacks = [
+  {name:'Priya S.',lang:'Hindi',tag:'Doctor mode',text:'Please add doctor mode — describe symptoms and get advice before hospital.',stars:5,time:'2 hours ago',votes:14},
+  {name:'Ahmed K.',lang:'Arabic',tag:'Legal help',text:'Legal advice in Arabic — many do not know their rights.',stars:5,time:'Yesterday',votes:9},
+  {name:'Marie D.',lang:'French',tag:'Voice input',text:'Voice input in French would be perfect for elderly people.',stars:4,time:'2 days ago',votes:6}
+];
+
+// INIT
+window.onload = function() {
+  loadSaved(); buildSettings(); buildStars(); buildFeatTags();
+  buildChips(); renderFeedList(); buildEmergList('');
+  checkOnlineStatus();
+  document.getElementById('inp').addEventListener('input', function(e) {
+    document.getElementById('send-btn').disabled = !e.target.value.trim() || loading;
+  });
+  window.addEventListener('online', function() { document.getElementById('offline-indicator').textContent = ''; document.getElementById('offline-indicator').innerHTML = '<span class="offline-dot"></span> Online'; });
+  window.addEventListener('offline', function() { document.getElementById('offline-indicator').innerHTML = '<span class="offline-dot" style="background:#f59e0b"></span> Offline Mode'; });
+};
+
+function checkOnlineStatus() {
+  if(!navigator.onLine) {
+    document.getElementById('offline-indicator').innerHTML = '<span class="offline-dot" style="background:#f59e0b"></span> Offline Mode';
+  }
+}
+
+function loadSaved() {
+  try {
+    var p = JSON.parse(localStorage.getItem('samadhan-p') || '{}');
+    if(p.name) document.getElementById('p-name').value = p.name;
+    if(p.age) document.getElementById('p-age').value = p.age;
+    if(p.job) document.getElementById('p-job').value = p.job;
+    if(p.edu) document.getElementById('p-edu').value = p.edu;
+    if(p.city) document.getElementById('p-city').value = p.city;
+    if(p.topics) selTopics = new Set(p.topics);
+    if(p.len) selLen = p.len;
+    if(p.tone) selTone = p.tone;
+    if(p.simple !== undefined) document.getElementById('tog-simple').checked = p.simple;
+    if(p.ex !== undefined) document.getElementById('tog-ex').checked = p.ex;
+    if(p.cost !== undefined) document.getElementById('tog-cost').checked = p.cost;
+    if(p.free) document.getElementById('p-free').value = p.free;
+    profile = p;
+  } catch(e) {}
+  var today = new Date().toDateString();
+  if(localStorage.getItem('samadhan-day') !== today) { qCount = 0; localStorage.setItem('samadhan-day', today); localStorage.setItem('samadhan-q', '0'); }
+  else { qCount = parseInt(localStorage.getItem('samadhan-q') || '0'); }
+  isPro = localStorage.getItem('samadhan-plan') === 'pro' || localStorage.getItem('samadhan-plan') === 'max';
+  isMax = localStorage.getItem('samadhan-plan') === 'max';
+  updatePlanUI();
+}
+
+function updatePlanUI() {
+  if(isMax) { document.getElementById('plan-nm').textContent = 'Pro Max 👑'; document.getElementById('plan-sb').textContent = 'Unlimited + Full Offline'; document.getElementById('doctor-badge').textContent = '✓'; document.getElementById('scam-badge').textContent = '✓'; document.getElementById('legal-badge').textContent = '✓'; }
+  else if(isPro) { document.getElementById('plan-nm').textContent = 'Pro ⚡'; document.getElementById('plan-sb').textContent = 'Unlimited questions'; document.getElementById('doctor-badge').textContent = '✓'; document.getElementById('scam-badge').textContent = '✓'; }
+  updateLimit();
+}
+
+function showPanel(name, btn) {
+  ['chat','settings','feedback','about'].forEach(function(p) { var el = document.getElementById('panel-' + p); if(el) el.style.display = 'none'; });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('on'); });
+  var target = document.getElementById('panel-' + name);
+  if(target) { target.style.display = name === 'chat' ? 'flex' : 'block'; if(name === 'chat') target.style.flexDirection = 'column'; }
+  if(btn) btn.classList.add('on');
+  var titles = {chat:'Chat with Samadhan AI', settings:'My Profile', feedback:'Feedback', about:'About'};
+  document.getElementById('topbar-title').textContent = titles[name] || 'Samadhan AI';
+  if(name === 'feedback') renderFeedList();
+}
+
+function activateMode(mode) {
+  if(mode === 'doctor' && !isPro) { openPay(); return; }
+  if(mode === 'scam' && !isPro) { openPay(); return; }
+  if(mode === 'legal' && !isMax) { openPay(); return; }
+  activeMode = mode;
+  var modeInfo = {doctor:{icon:'🏥',label:'Doctor Mode',placeholder:'Describe your symptoms in detail...'},scam:{icon:'🔍',label:'Scam Detector',placeholder:'Paste the suspicious message here...'},legal:{icon:'⚖️',label:'Legal Guide',placeholder:'Describe your legal situation...'}};
+  var info = modeInfo[mode];
+  document.getElementById('mode-indicator').style.display = 'flex';
+  document.getElementById('mode-icon').textContent = info.icon;
+  document.getElementById('mode-label').textContent = info.label;
+  document.getElementById('inp').placeholder = info.placeholder;
+  showPanel('chat', document.querySelector('.nav-btn.on') || document.querySelectorAll('.nav-btn')[0]);
+  addSystemMsg(info.icon + ' ' + info.label + ' activated. ' + info.placeholder);
+}
+
+function addSystemMsg(text) {
+  var area = document.getElementById('chat-area');
+  var wb = document.getElementById('welcome-box'); if(wb) wb.style.display = 'none';
+  var d = document.createElement('div');
+  d.style.cssText = 'text-align:center;padding:8px 16px;margin:4px auto;max-width:400px';
+  d.innerHTML = '<span style="font-size:12px;padding:5px 14px;border-radius:20px;background:var(--gray2);color:var(--text3);display:inline-block">' + text + '</span>';
+  area.appendChild(d); area.scrollTop = area.scrollHeight;
+}
+
+function setLang(l, btn) {
+  lang = l;
+  document.querySelectorAll('.lpill').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  var inp = document.getElementById('inp');
+  inp.placeholder = PLACEHOLDER_DATA[l] || PLACEHOLDER_DATA.en;
+  inp.dir = l === 'ar' ? 'rtl' : 'ltr';
+  buildChips();
+}
+
+function buildChips() {
+  var data = CHIPS_DATA[lang] || CHIPS_DATA.en;
+  var area = document.getElementById('chips-area'); area.innerHTML = '';
+  data.forEach(function(c) { var s = document.createElement('span'); s.className = 'chip2'; s.textContent = c; s.onclick = function() { useChip(c); }; area.appendChild(s); });
+}
+
+function useChip(text) {
+  document.getElementById('inp').value = text;
+  document.getElementById('send-btn').disabled = false;
+  var wb = document.getElementById('welcome-box'); if(wb) wb.style.display = 'none';
+  send();
+}
+
+function onKey(e) { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); } }
+function grow(el) { el.style.height = '42px'; el.style.height = Math.min(el.scrollHeight, 110) + 'px'; }
+function now() { return new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
+function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+
+function updateLimit() {
+  var bar = document.getElementById('limit-bar');
+  if(!isPro && qCount > 0) { bar.style.display = 'flex'; document.getElementById('limit-fill').style.width = Math.min(100, Math.round(qCount / FREE_LIMIT * 100)) + '%'; document.getElementById('limit-txt').textContent = qCount + '/' + FREE_LIMIT + ' used today'; }
+}
+
+// OFFLINE SEARCH
+function searchOfflineKB(query) {
+  var q = query.toLowerCase();
+  for(var key in OFFLINE_KB) {
+    var keywords = key.split(' ');
+    var match = keywords.some(function(k) { return q.includes(k); });
+    if(match) return OFFLINE_KB[key];
+  }
+  return null;
+}
+
+function buildSys() {
+  var modePrompts = {
+    doctor: 'You are Samadhan AI in DOCTOR MODE. User will describe symptoms. Give: 1) Likely cause, 2) Immediate steps, 3) When to see doctor urgently, 4) Basic home remedies. Always recommend professional consultation for serious symptoms. Never diagnose definitively.',
+    scam: 'You are Samadhan AI in SCAM DETECTOR MODE. Analyze the message for: 1) Scam indicators (urgency, money requests, OTP requests, too-good offers), 2) Verdict: LIKELY SCAM / SAFE / SUSPICIOUS, 3) What to do. Be direct and clear.',
+    legal: 'You are Samadhan AI in LEGAL GUIDE MODE for India. Explain legal rights in simple Hindi/English. Cover tenant rights, consumer rights, worker rights, police rights. Always recommend consulting a lawyer for serious cases.',
+    general: 'You are Samadhan AI, a warm helpful Indian problem-solving assistant. Give practical structured answers. Use numbered steps. Keep under 150 words. Be friendly.'
+  };
+  var ln = lang==='hi'?'Reply in simple Hindi (Hinglish ok).':lang==='ar'?'Reply in Arabic.':lang==='fr'?'Reply in French.':lang==='ta'?'Reply in Tamil.':lang==='bn'?'Reply in Bengali.':'';
+  var s = (modePrompts[activeMode] || modePrompts.general) + ' ' + ln;
+  var user = window._user;
+  var name = profile.name || (user && user.displayName ? user.displayName.split(' ')[0] : '');
+  if(name) s += ' Address user as ' + name + '.';
+  if(profile.job) s += ' They are a ' + profile.job + '.';
+  if(profile.city) s += ' They live in ' + profile.city + '.';
+  if(document.getElementById('tog-simple') && document.getElementById('tog-simple').checked) s += ' Simple words only.';
+  if(document.getElementById('tog-ex') && document.getElementById('tog-ex').checked) s += ' Include one real-life example.';
+  if(document.getElementById('tog-cost') && document.getElementById('tog-cost').checked) s += ' Include ₹ costs when relevant.';
+  if(selLen === 'Very short') s += ' Max 3 lines.';
+  if(selLen === 'Detailed') s += ' Give thorough answer.';
+  if(profile.free) s += ' Extra: ' + profile.free;
+  return s;
+}
+
+function parseResp(text) {
+  var lines = text.split('\n').filter(function(l) { return l.trim(); });
+  var steps = [], tips = [], others = [];
+  lines.forEach(function(line) {
+    var t = line.trim();
+    if(t.match(/^\d+[\.\)]/)) steps.push(t.replace(/^\d+[\.\)]\s*/, ''));
+    else if(t.toLowerCase().match(/^(tip|pro tip):/)) tips.push(t.replace(/^(pro )?tip:\s*/i, ''));
+    else others.push(t);
+  });
+  var tabs = [];
+  if(steps.length > 1) tabs.push({id:'steps', label:'📋 Steps'});
+  tabs.push({id:'full', label:'📄 Answer'});
+  if(tips.length > 0) tabs.push({id:'tip', label:'💡 Tip'});
+  var html = '<div class="ans-card2"><div class="ans-tabs2">';
+  tabs.forEach(function(t, i) { html += '<button class="atab' + (i===0?' on':'') + '" onclick="switchTab(this,\'' + t.id + '\')" data-tab="' + t.id + '">' + t.label + '</button>'; });
+  html += '</div>';
+  if(steps.length > 1) {
+    html += '<div class="abody' + (tabs[0].id==='steps'?' on':'') + '" data-body="steps"><div class="ans-steps2">';
+    steps.forEach(function(s, i) { html += '<div class="ans-step2"><div class="step-n">' + (i+1) + '</div><div class="step-t">' + esc(s) + '</div></div>'; });
+    html += '</div></div>';
+  }
+  html += '<div class="abody' + (tabs[0].id==='full'?' on':'') + '" data-body="full">' + esc(text) + '</div>';
+  if(tips.length > 0) { html += '<div class="abody' + (tabs[tabs.length-1].id==='tip'?' on':'') + '" data-body="tip"><div class="tip-box2"><span>💡</span><span>' + esc(tips.join(' ')) + '</span></div></div>'; }
+  html += '</div>';
+  if(activeMode === 'doctor') html += '<div class="doctor-card"><div class="doctor-title">🏥 Medical Disclaimer</div><div class="doctor-body">This is general guidance only. Always consult a qualified doctor for proper diagnosis and treatment. In emergency, call 108 immediately.</div></div>';
+  if(activeMode === 'scam') html += '<div class="scam-card"><div class="scam-title">⚠️ Stay Safe</div><div class="scam-body">Never share OTP, password, or bank details with anyone. If scammed, call 1930 (Cyber Crime Helpline) immediately.</div></div>';
+  return html;
+}
+
+window.switchTab = function(btn, tabId) {
+  var card = btn.closest('.ans-card2');
+  card.querySelectorAll('.atab').forEach(function(t) { t.classList.remove('on'); });
+  card.querySelectorAll('.abody').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  var body = card.querySelector('[data-body="' + tabId + '"]');
+  if(body) body.classList.add('on');
+};
+
+// AUDIO
+window.playAudio = function(btn, enc) {
+  if(_activeBtn === btn && _activeUtter) { window.speechSynthesis.cancel(); _activeUtter = null; _activeBtn = null; btn.textContent = '🔊 Audio'; btn.classList.remove('playing'); return; }
+  if(_activeUtter) { window.speechSynthesis.cancel(); if(_activeBtn) { _activeBtn.textContent = '🔊 Audio'; _activeBtn.classList.remove('playing'); } }
+  if(!window.speechSynthesis) { alert('Audio needs Chrome browser.'); return; }
+  var text = decodeURIComponent(enc);
+  var lc = lang==='hi'?'hi-IN':lang==='ar'?'ar-SA':lang==='fr'?'fr-FR':lang==='ta'?'ta-IN':lang==='bn'?'bn-IN':'en-IN';
+  var u = new SpeechSynthesisUtterance(text); u.lang = lc; u.rate = 0.9; u.volume = 1;
+  _activeUtter = u; _activeBtn = btn;
+  btn.textContent = '⏸ Playing...'; btn.classList.add('playing');
+  u.onend = function() { btn.textContent = '🔊 Audio'; btn.classList.remove('playing'); _activeUtter = null; _activeBtn = null; };
+  u.onerror = function() { btn.textContent = '🔊 Audio'; btn.classList.remove('playing'); _activeUtter = null; _activeBtn = null; };
+  window.speechSynthesis.cancel();
+  setTimeout(function() { window.speechSynthesis.speak(u); }, 150);
+};
+
+async function send() {
+  if(loading) return;
+  var inp = document.getElementById('inp');
+  var msg = inp.value.trim(); if(!msg) return;
+  if(!isPro && qCount >= FREE_LIMIT) { openPay(); return; }
+  inp.value = ''; inp.style.height = '42px';
+  document.getElementById('send-btn').disabled = true; loading = true;
+  var wb = document.getElementById('welcome-box'); if(wb) wb.style.display = 'none';
+  var area = document.getElementById('chat-area');
+
+  // User message
+  var user = window._user;
+  var avContent = user && user.photoURL ? '<img src="' + user.photoURL + '">' : (profile.name ? profile.name[0].toUpperCase() : (user && user.displayName ? user.displayName[0].toUpperCase() : 'U'));
+  var ud = document.createElement('div'); ud.className = 'msg-row usr';
+  ud.innerHTML = '<div class="msg-av3">' + avContent + '</div><div class="msg-body3"><div class="bubble3">' + esc(msg) + '</div><div class="msg-time3">' + now() + '</div></div>';
+  area.appendChild(ud); area.scrollTop = area.scrollHeight;
+
+  // Loading
+  var ld = document.createElement('div'); ld.className = 'msg-row bot';
+  ld.innerHTML = '<div class="msg-av3">⚡</div><div class="msg-body3"><div class="bubble3 thinking">Thinking...</div></div>';
+  area.appendChild(ld); area.scrollTop = area.scrollHeight;
+
+  qCount++; localStorage.setItem('samadhan-q', qCount); updateLimit();
+
+  var reply = '';
+  var isOffline = false;
+
+  // Try offline KB first if offline or Pro Max
+  if(!navigator.onLine || isMax) {
+    var offlineAnswer = searchOfflineKB(msg);
+    if(offlineAnswer && !navigator.onLine) { reply = offlineAnswer; isOffline = true; }
+  }
+
+  if(!reply) {
+    try {
+      var res = await fetch(API_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json','Authorization':'Bearer ' + GROQ_KEY},
+        body: JSON.stringify({model: MODEL, messages: [{role:'system',content:buildSys()},{role:'user',content:msg}]})
+      });
+      var data = await res.json();
+      if(data.choices && data.choices[0] && data.choices[0].message) reply = data.choices[0].message.content;
+      else if(data.error) reply = 'Error: ' + data.error.message;
+      else reply = 'Sorry, no response. Please try again.';
+    } catch(e) {
+      // Offline fallback
+      var offlineAns = searchOfflineKB(msg);
+      if(offlineAns) { reply = offlineAns; isOffline = true; }
+      else if(GROQ_KEY === 'YOUR_GROQ_KEY_HERE') { reply = '⚠️ API Key missing! Add your Groq key in the file. Get free key at console.groq.com'; }
+      else { reply = 'No internet connection. Offline knowledge base searched but no match found for: "' + msg + '". Please try: fever, headache, WiFi, stress, scam, money, job.'; isOffline = true; }
+    }
+  }
+
+  ld.remove();
+  var enc = encodeURIComponent(reply);
+  var bd = document.createElement('div'); bd.className = 'msg-row bot';
+  var ansHtml = parseResp(reply);
+  var offlineBadge = isOffline ? '<div class="offline-msg-badge">📴 Answered offline</div>' : '';
+  var fmtRow = '<div class="fmt-row2"><button class="fmt-btn2 on">📄 Text</button><button class="fmt-btn2" onclick="playAudio(this,\'' + enc + '\')">🔊 Audio</button></div>';
+  bd.innerHTML = '<div class="msg-av3">⚡</div><div class="msg-body3">' + ansHtml + offlineBadge + fmtRow + '<div class="msg-time3">' + now() + '</div></div>';
+  area.appendChild(bd); area.scrollTop = area.scrollHeight;
+
+  loading = false; document.getElementById('send-btn').disabled = false;
+}
+
+function startVoice() {
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR) { alert('Voice input needs Chrome browser.'); return; }
+  var btn = document.getElementById('mic-btn');
+  var r = new SR(); r.lang = lang==='hi'?'hi-IN':lang==='ar'?'ar-SA':lang==='fr'?'fr-FR':'en-IN';
+  btn.classList.add('rec');
+  r.onresult = function(e) { document.getElementById('inp').value = e.results[0][0].transcript; document.getElementById('send-btn').disabled = false; btn.classList.remove('rec'); send(); };
+  r.onerror = function() { btn.classList.remove('rec'); }; r.onend = function() { btn.classList.remove('rec'); }; r.start();
+}
+
+function openEmerg() { document.getElementById('emerg-overlay').classList.add('open'); buildEmergList(''); setTimeout(function() { document.getElementById('esrch').focus(); }, 100); }
+function closeEmerg() { document.getElementById('emerg-overlay').classList.remove('open'); }
+function filterEmerg(q) { buildEmergList(q); }
+function buildEmergList(q) {
+  var list = document.getElementById('emerg-list');
+  var f = EMERGENCIES.filter(function(e) { return !q || e.t.toLowerCase().includes(q.toLowerCase()) || e.a.toLowerCase().includes(q.toLowerCase()); });
+  list.innerHTML = f.length ? f.map(function(e) { return '<div class="eitem2"><div class="eitem-title2">' + e.t + '</div><div class="eitem-ans2">' + e.a.replace(/\n/g,'<br>') + '</div></div>'; }).join('') : '<div style="color:var(--text4);font-size:13px;padding:10px;text-align:center">No match. Try: snake, fever, burn, flood</div>';
+}
+document.getElementById('emerg-overlay').addEventListener('click', function(e) { if(e.target === this) closeEmerg(); });
+
+// PAYMENT
+var selPlanId = 'pro';
+function openPay() { document.getElementById('pay-modal').classList.add('open'); updatePrices(); }
+function closePay() { document.getElementById('pay-modal').classList.remove('open'); }
+function selPlan(plan) {
+  selPlanId = plan;
+  ['free','pro','max'].forEach(function(p) { document.getElementById('plan-' + p).classList.remove('sel'); });
+  document.getElementById('plan-' + plan).classList.add('sel');
+  document.getElementById('pay-cta-btn').textContent = plan === 'free' ? 'Continue Free' : 'Subscribe Now →';
+}
+function updatePrices() {
+  var country = document.getElementById('country-sel').value;
+  var p = PRICES[country] || PRICES.OTHER;
+  document.getElementById('pro-price').textContent = p.pro;
+  document.getElementById('max-price').textContent = p.max;
+}
+function processPayment() {
+  if(selPlanId === 'free') { closePay(); return; }
+  var country = document.getElementById('country-sel').value;
+  var p = PRICES[country] || PRICES.OTHER;
+  var planName = selPlanId === 'pro' ? 'Pro' : 'Pro Max';
+  var amount = selPlanId === 'pro' ? p.proV : p.maxV;
+
+  if(p.method === 'razorpay') {
+    if(typeof Razorpay === 'undefined') { alert('Payment loading... Please wait a moment and try again.'); return; }
+    var opts = {
+      key: 'YOUR_RAZORPAY_KEY_HERE',
+      amount: amount * 100,
+      currency: 'INR',
+      name: 'Samadhan AI',
+      description: planName + ' Plan — Monthly',
+      handler: function(response) {
+        localStorage.setItem('samadhan-plan', selPlanId);
+        isPro = true; isMax = selPlanId === 'max';
+        updatePlanUI(); closePay();
+        alert('Payment successful! Welcome to Samadhan AI ' + planName + ' 🎉');
+      },
+      prefill: {name: profile.name || '', email: window._user ? window._user.email : ''},
+      theme: {color: '#16a34a'}
+    };
+    new Razorpay(opts).open();
+  } else {
+    alert('🌍 International Payment\n\nPlan: ' + planName + '\nPrice: ' + (selPlanId==='pro'?p.pro:p.max) + '/month\n\nStripe payment integration coming soon!\n\nTo activate now, email us:\nsamadhanai@gmail.com\n\nWe will activate your plan within 24 hours. 🙏');
+  }
+}
+document.getElementById('pay-modal').addEventListener('click', function(e) { if(e.target === this) closePay(); });
+
+// SETTINGS
+var TOPICS = ['Health','Technology','Finance','Education','Legal rights','Agriculture','Business','Govt schemes','Mental health','Jobs & career','Housing','Emergency'];
+var LENGTHS = ['Very short','Short','Detailed','Step by step'];
+var TONES = ['Friendly','Professional','Like a friend','Formal'];
+function buildSettings() {
+  var tp = document.getElementById('topic-pills'); if(tp) tp.innerHTML = TOPICS.map(function(t) { return '<span class="spill2' + (selTopics.has(t)?' on':'') + '" onclick="togTopic(this,\'' + t + '\')">' + t + '</span>'; }).join('');
+  var lp = document.getElementById('len-pills'); if(lp) lp.innerHTML = LENGTHS.map(function(l) { return '<span class="spill2' + (selLen===l?' on':'') + '" onclick="pickLen(this,\'' + l + '\')">' + l + '</span>'; }).join('');
+  var tp2 = document.getElementById('tone-pills'); if(tp2) tp2.innerHTML = TONES.map(function(t) { return '<span class="spill2' + (selTone===t?' on':'') + '" onclick="pickTone(this,\'' + t + '\')">' + t + '</span>'; }).join('');
+}
+function togTopic(el,t){selTopics.has(t)?selTopics.delete(t):selTopics.add(t);el.classList.toggle('on');}
+function pickLen(el,l){selLen=l;document.querySelectorAll('#len-pills .spill2').forEach(function(e){e.classList.remove('on');});el.classList.add('on');}
+function pickTone(el,t){selTone=t;document.querySelectorAll('#tone-pills .spill2').forEach(function(e){e.classList.remove('on');});el.classList.add('on');}
+function saveProfile(){
+  profile={name:document.getElementById('p-name').value.trim(),age:document.getElementById('p-age').value,job:document.getElementById('p-job').value,edu:document.getElementById('p-edu').value,city:document.getElementById('p-city').value.trim(),topics:[...selTopics],len:selLen,tone:selTone,simple:document.getElementById('tog-simple').checked,ex:document.getElementById('tog-ex').checked,cost:document.getElementById('tog-cost').checked,free:document.getElementById('p-free').value.trim()};
+  localStorage.setItem('samadhan-p',JSON.stringify(profile));
+  var t=document.getElementById('save-toast');t.style.display='block';setTimeout(function(){t.style.display='none';},3000);
+}
+var FEAT_LIST=['Voice input','Better offline','Video answers','Doctor mode','Legal help','Job search','Study helper','More languages','Family mode','Mental health'];
+function buildStars(){var row=document.getElementById('star-row');if(!row)return;for(var i=1;i<=5;i++){var b=document.createElement('button');b.className='star2';b.id='star2-'+i;b.innerHTML='<svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>';b.onclick=(function(n){return function(){setStar(n);};})(i);row.appendChild(b);}}
+function setStar(n){starVal=n;for(var i=1;i<=5;i++)document.getElementById('star2-'+i).className='star2'+(i<=n?' on':'');}
+function buildFeatTags(){var el=document.getElementById('feat-tags');if(!el)return;el.innerHTML=FEAT_LIST.map(function(t){return '<span class="ftag2" onclick="togFeat(this,\''+t+'\')">'+t+'</span>';}).join('');}
+function togFeat(el,t){selTags.has(t)?selTags.delete(t):selTags.add(t);el.classList.toggle('on');}
+function submitFB(){
+  var text=document.getElementById('fb-text').value.trim();if(!text){document.getElementById('fb-text').focus();return;}
+  feedbacks.unshift({name:document.getElementById('fb-name').value.trim()||'Anonymous',lang:document.getElementById('fb-lang').value.trim()||'Unknown',tag:selTags.size>0?[...selTags][0]:'General',text,stars:starVal||3,time:'Just now',votes:0});
+  document.getElementById('fb-text').value='';document.getElementById('fb-name').value='';document.getElementById('fb-lang').value='';
+  setStar(0);selTags.clear();document.querySelectorAll('.ftag2').forEach(function(b){b.classList.remove('on');});
+  var t=document.getElementById('fb-toast');t.style.display='block';setTimeout(function(){t.style.display='none';},3000);renderFeedList();
+}
+function renderFeedList(){
+  var el=document.getElementById('feed-list');if(!el)return;
+  el.innerHTML=feedbacks.map(function(f,i){return '<div class="feed-item2"><div class="feed-top2"><div class="feed-av2">'+f.name[0].toUpperCase()+'</div><div class="feed-nm2">'+f.name+'</div><span class="feed-lang2">'+f.lang+'</span><span class="feed-time2">'+f.time+'</span></div><span class="feed-tag2">'+f.tag+'</span><div class="feed-txt2">'+f.text+'</div><button class="vote-btn2" onclick="vote('+i+')">👍 Agree ('+f.votes+')</button></div>';}).join('');
+}
+function vote(i){feedbacks[i].votes++;renderFeedList();}
+</script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+</html>
